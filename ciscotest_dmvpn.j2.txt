@@ -1,3 +1,4 @@
 {% for int,int_value in  parsed_show_dmvpn.interfaces.items() %}
-"Tunnel": "{{ int }}", "NHRP_Peers": "{{int_value.nhrp_peers}}"
+{"timestamp":"{{show_clock_output.stdout_lines[0][0]}}","hostname":"{{inventory_hostname}}","tunnel_name":"{{int}}","number_of_nhrp_peers":"{{int_value.nhrp_peers}}"}
 {% endfor %}
+
