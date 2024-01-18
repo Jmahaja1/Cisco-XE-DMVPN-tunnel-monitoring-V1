@@ -31,13 +31,22 @@
       set_fact:
          parsed_show_dmvpn: "{{ show_tunnels.stdout[0] | parse_genie(command='show dmvpn', os='ios') }}"
       delegate_to: localhost
-    - name: Print Genie Output
+    - name: Print Genie Output - name: Execute show clock command
+      ios_command:
+        commands:
+          - show clock
+      register: show_clock_output
+    - name: Print show Clock output
+      debug:
+        var: show_clock_output.stdout_lines[0][0]
+
       debug:
         var: parsed_show_dmvpn
     - name: Save parsed output in a file
       copy:
         content: "{{ parsed_show_dmvpn }}"
         dest: /home/abc/xyz/dmvpn_tunnels
+    
     - name: Create file
       template:
        src: ciscotest_dmvpn.j2
